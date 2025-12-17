@@ -1,6 +1,10 @@
 package com.example.demo.entity;
+import jakarta.persistence.*;
+@Entity
 public class Student {
+       @Id
        private int id;
+    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
        private String stuname;
        private String stuemail;
        private float cgpa;
