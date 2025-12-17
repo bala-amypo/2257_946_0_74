@@ -14,7 +14,7 @@ public class Student{
    }
    public String getName(){
     return name;
-   }
+   }3
    public void setName(){
     this.name=name;
    }
