@@ -3,7 +3,7 @@ import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
 import org.springframework.stereotype.Service;
 @Service
-public class StudentServiceImp implements StudentService{
+public class StudentServiceImpl implements StudentService{
     @Autowired
     StudentRepository repo;
     @Override
