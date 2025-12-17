@@ -2,7 +2,7 @@ package com.example.demo.services.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.entity.Student;
-import com.example.demo.repository.StudentRepo;
+import com.example.demo.repository.StudentRepository;
 import com.example.demo.services.StudentService;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentServiceImp implements StudentService{
     @Autowired
-    StudentRepo repo;
+    StudentRepository repo;
 
     @Override
     public Student createData(Student stu){
