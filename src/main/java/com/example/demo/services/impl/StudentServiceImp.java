@@ -1,9 +1,8 @@
-import com.example.demo.entity
-
-
-
+import com.example.demo.entity.Student;
+import com.example.demo.repository.StudentRepository;
+import com.example.demo.service.StudentService;
 import org.springframework.stereotype.Service;
-@service
+@Service
 public class StudentServiceImp implements StudentService{
     @Autowired
     StudentRepository repo;
