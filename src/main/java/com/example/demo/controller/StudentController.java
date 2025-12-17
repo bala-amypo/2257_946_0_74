@@ -4,13 +4,13 @@ package com.example.demo.controller;
  import org.springframework.web.bind.annotation.RequestBody;
  import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Student;
-import com.example.services.StudentService;
+import com.example.demo.entity.Student;
+import com.example.demo.services.StudentService;
 @RestController
 public class StudentController{
     @Autowired
     StudentService ser;
-    @GetMapping("/adddata")
+    @PostMapping("/adddata")
     public Student createData(@RequestBody Student stu){
         return ser.createData(stu);
     }
