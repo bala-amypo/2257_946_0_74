@@ -92,7 +92,7 @@ public class Shipment {
         return weightKg;
     }
 
-    public void setWeightKg(double weightKg) {
+    public voi setWeightKg(double weightKg) {
         this.weightKg = weightKg;
     }
 
