@@ -12,28 +12,25 @@ import java.time.LocalDateTime;
 @Service
 public class RouteOptimizationServiceImpl implements RouteOptimizationService {
 
-    private final ShipmentRepository shipmentRepository;
     private final RouteOptimizationResultRepository resultRepository;
+    private final ShipmentRepository shipmentRepository;
 
-    public RouteOptimizationServiceImpl(
-            ShipmentRepository shipmentRepository,
-            RouteOptimizationResultRepository resultRepository) {
-        this.shipmentRepository = shipmentRepository;
+    public RouteOptimizationServiceImpl(RouteOptimizationResultRepository resultRepository,
+                                        ShipmentRepository shipmentRepository) {
         this.resultRepository = resultRepository;
+        this.shipmentRepository = shipmentRepository;
     }
 
     @Override
     public RouteOptimizationResult optimizeRoute(Long shipmentId) {
-
-        Shipment shipment = shipmentRepository.findById(shipmentId)
-                .orElseThrow(() -> new RuntimeException("Shipment not found"));
+        Shipment shipment = shipmentRepository.findById(shipmentId).orElseThrow();
 
         double distance = 100.0;
         double fuel = 10.0;
 
         RouteOptimizationResult result = RouteOptimizationResult.builder()
                 .shipment(shipment)
-                .totalDistance(distance)
+                .distance(distance)
                 .fuelUsed(fuel)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -43,7 +40,6 @@ public class RouteOptimizationServiceImpl implements RouteOptimizationService {
 
     @Override
     public RouteOptimizationResult getResult(Long shipmentId) {
-        return resultRepository.findByShipmentId(shipmentId)
-                .orElseThrow(() -> new RuntimeException("Result not found"));
+        return resultRepository.findByShipmentId(shipmentId);
     }
 }

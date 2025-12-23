@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface LocationService {
 
-    Location addLocation(Location location);
+    Location createLocation(Location location);
 
     List<Location> getAllLocations();
 }

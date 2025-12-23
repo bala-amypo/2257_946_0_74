@@ -23,8 +23,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle addVehicle(Long userId, Vehicle vehicle) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow();
         vehicle.setUser(user);
         return vehicleRepository.save(vehicle);
     }
@@ -36,7 +35,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle findById(Long id) {
-        return vehicleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        return vehicleRepository.findById(id).orElseThrow();
     }
 }
