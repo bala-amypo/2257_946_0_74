@@ -17,10 +17,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location createLocation(Location location) {
-        if (location.getLatitude() == 0 || location.getLongitude() == 0) {
-            throw new IllegalArgumentException("Latitude and Longitude must be non-zero");
-        }
+    public Location addLocation(Location location) {
         return locationRepository.save(location);
     }
 

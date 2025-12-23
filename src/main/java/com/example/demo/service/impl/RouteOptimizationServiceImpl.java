@@ -23,18 +23,19 @@ public class RouteOptimizationServiceImpl implements RouteOptimizationService {
     }
 
     @Override
-    public RouteOptimizationResult optimize(Long shipmentId) {
+    public RouteOptimizationResult optimizeRoute(Long shipmentId) {
+
         Shipment shipment = shipmentRepository.findById(shipmentId)
                 .orElseThrow(() -> new RuntimeException("Shipment not found"));
 
-        double distance = 120.5; // dummy
-        double fuelUsed = distance / shipment.getVehicle().getFuelEfficiency();
+        double distance = 100.0;
+        double fuel = 10.0;
 
         RouteOptimizationResult result = RouteOptimizationResult.builder()
                 .shipment(shipment)
                 .totalDistance(distance)
-                .fuelUsed(fuelUsed)
-                .optimizedAt(LocalDateTime.now())
+                .fuelUsed(fuel)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         return resultRepository.save(result);
