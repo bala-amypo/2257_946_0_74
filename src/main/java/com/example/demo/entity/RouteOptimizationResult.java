@@ -8,6 +8,6 @@ import lombok.Data;
 public class RouteOptimizationResult {
     private String route;
     private double distance;
-    private Shipment shipment;
-    // add other fields as needed
+    private Shipment shipment; // already added from previous fix
+    private double fuelUsed;   // <-- ADD THIS
 }
