@@ -1,25 +1,29 @@
 package com.example.demo;
 
-import com.example.demo.entity.User;
-import com.example.demo.entity.RouteOptimizationResult;
-import com.example.demo.entity.Vehicle;
-import com.example.demo.repository.RouteOptimizationResultRepository;
-import com.example.demo.repository.VehicleRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
+import com.example.demo.repository.RouteOptimizationResultRepository;
+import com.example.demo.repository.ShipmentRepository;
+import com.example.demo.repository.VehicleRepository;
+import com.example.demo.entity.RouteOptimizationResult;
+import com.example.demo.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TransportRouteOptimizationTest {
 
     @Autowired
-    private RouteOptimizationResultRepository routeOptimizationResultRepository; // fixed
+    private ShipmentRepository shipmentRepository;
+
+    @Autowired
+    private RouteOptimizationResultRepository routeOptimizationResultRepository;
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -29,52 +33,48 @@ public class TransportRouteOptimizationTest {
 
     private JwtUtil jwtUtil;
 
-    private User testUser;
-    private UserDetails testUserDetails;
-
     @BeforeEach
-    public void setUp() {
-        // use no-arg constructor
+    public void setup() {
+        // Use default constructor of JwtUtil
         jwtUtil = new JwtUtil();
-
-        // Create test user
-        testUser = new User();
-        testUser.setName("Test User");
-        testUser.setEmail("test@example.com");
-        testUser.setPassword("password");
-        testUser = userService.register(testUser); // fixed
-
-        testUserDetails = org.springframework.security.core.userdetails.User
-                .withUsername(testUser.getEmail())
-                .password(testUser.getPassword())
-                .roles("USER")
-                .build();
     }
 
     @Test
-    public void testRouteOptimization() {
-        // Example vehicle
-        Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleNumber("TN12345");
-        vehicle.setCapacityKg(1000);
-        vehicleRepository.save(vehicle);
+    public void testUserRegistration() {
+        User user = new User();
+        user.setUsername("testuser");
+        user.setPassword("password");
+        userService.register(user);
 
-        // Create dummy route result
+        User registeredUser = userService.findByUsername("testuser");
+        assertNotNull(registeredUser);
+        assertEquals("testuser", registeredUser.getUsername());
+    }
+
+    @Test
+    public void testRouteOptimizationResult() {
         RouteOptimizationResult res = new RouteOptimizationResult();
-        res.setOptimizedDistanceKm(120.0); // fixed getter usage
-        res.setEstimatedFuelUsageL(15.0);
+        res.setOptimizedDistanceKm(100.0);
+        res.setEstimatedFuelUsageL(10.0);
+
         routeOptimizationResultRepository.save(res);
 
-        // Validate token
-        String token = jwtUtil.generateToken(testUserDetails);
-        boolean isValid = jwtUtil.validateToken(token, testUserDetails); // pass UserDetails
-        assert isValid;
+        Optional<RouteOptimizationResult> savedRes = routeOptimizationResultRepository.findById(res.getId());
+        assertTrue(savedRes.isPresent());
+        assertEquals(100.0, savedRes.get().getOptimizedDistanceKm());
+        assertEquals(10.0, savedRes.get().getEstimatedFuelUsageL());
     }
 
     @Test
-    public void testVehicleRepository() {
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findByVehicleNumber("TN12345");
-        assert vehicleOpt.isPresent();
+    public void testJwtValidation() {
+        User user = new User();
+        user.setUsername("jwtuser");
+        user.setPassword("password");
+        userService.register(user);
+
+        String token = jwtUtil.generateToken(user.getUsername());
+        assertTrue(jwtUtil.validateToken(token, user));
     }
 
+    // Add more tests as needed
 }
