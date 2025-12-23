@@ -1,11 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +14,8 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Double weightKg;
+
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
@@ -29,8 +27,4 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name = "drop_location_id", nullable = false)
     private Location dropLocation;
-
-    private Double weightKg;
-
-    private LocalDate scheduledDate;
 }
