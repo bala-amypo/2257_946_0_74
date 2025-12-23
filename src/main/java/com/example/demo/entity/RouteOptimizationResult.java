@@ -5,11 +5,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "route_optimization_results")
+@Builder
 public class RouteOptimizationResult {
 
     @Id
@@ -17,30 +18,11 @@ public class RouteOptimizationResult {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "shipment_id", nullable = false)
     private Shipment shipment;
 
-    private Double optimizedDistanceKm;
+    private Double distanceKm;
 
-    private Double estimatedFuelUsageL;
+    private Double fuelUsed;
 
-    private LocalDateTime generatedAt;
-
-    // REQUIRED constructor for service usage
-    public RouteOptimizationResult(
-            Shipment shipment,
-            Double optimizedDistanceKm,
-            Double estimatedFuelUsageL,
-            LocalDateTime generatedAt
-    ) {
-        this.shipment = shipment;
-        this.optimizedDistanceKm = optimizedDistanceKm;
-        this.estimatedFuelUsageL = estimatedFuelUsageL;
-        this.generatedAt = generatedAt;
-    }
-
-    @PrePersist
-    public void onCreate() {
-        this.generatedAt = LocalDateTime.now();
-    }
+    private LocalDateTime createdAt;
 }

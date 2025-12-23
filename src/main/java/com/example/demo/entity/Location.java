@@ -3,17 +3,21 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "locations")
+@Builder
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double latitude;
-    private Double longitude;
+    private String name;
+
+    private double latitude;
+
+    private double longitude;
 }

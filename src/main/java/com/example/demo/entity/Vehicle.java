@@ -3,24 +3,25 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "vehicles")
+@Builder
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String vehicleNumber;
 
-    private Double capacityKg;
+    private double capacityKg;
 
-    private Double fuelEfficiency;
+    private double fuelEfficiency;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

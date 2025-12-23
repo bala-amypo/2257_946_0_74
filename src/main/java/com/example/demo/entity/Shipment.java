@@ -5,27 +5,25 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "shipments")
+@Builder
 public class Shipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "vehicle_id")
+    @ManyToOne
     private Vehicle vehicle;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "pickup_location_id")
+    @ManyToOne
     private Location pickupLocation;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "drop_location_id")
+    @ManyToOne
     private Location dropLocation;
 
     private double weightKg;
