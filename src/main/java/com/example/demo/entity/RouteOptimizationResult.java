@@ -24,7 +24,6 @@ public class RouteOptimizationResult {
 
     private Double optimizedDistanceKm;
     private Double estimatedFuelUsageL;
-
     private LocalDateTime generatedAt;
 
     // ✅ REQUIRED BY SERVICE
