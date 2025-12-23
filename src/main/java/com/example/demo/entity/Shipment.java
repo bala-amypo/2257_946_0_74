@@ -3,28 +3,49 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "shipments")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Shipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double weightKg;
-
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    @ManyToOne
-    @JoinColumn(name = "pickup_location_id", nullable = false)
-    private Location pickupLocation;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "source_location_id")
+    private Location sourceLocation;
 
-    @ManyToOne
-    @JoinColumn(name = "drop_location_id", nullable = false)
-    private Location dropLocation;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "destination_location_id")
+    private Location destinationLocation;
+
+    @Column(nullable = false)
+    private Double weightKg;
+
+    // 🔴 THIS FIELD WAS MISSING
+    @Column(nullable = false)
+    private LocalDateTime scheduledDate;
+
+    @Column
+    private Double distanceKm;
+
+    @Column
+    private Double fuelUsed;
+
+    @PrePersist
+    public void prePersist() {
+        if (scheduledDate == null) {
+            scheduledDate = LocalDateTime.now();
+        }
+    }
 }
