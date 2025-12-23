@@ -3,27 +3,29 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Location;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.service.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LocationServiceImpl implements LocationService {
 
-    @Autowired
-    private LocationRepository locationRepository;
+    private final LocationRepository locationRepository;
+
+    public LocationServiceImpl(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
 
     @Override
-    public Location save(Location location) {
-
-        // primitive double → check range, NOT null
-        if (location.getLatitude() < -90 || location.getLatitude() > 90) {
-            throw new RuntimeException("Invalid latitude");
+    public Location createLocation(Location location) {
+        if (location.getLatitude() == 0 || location.getLongitude() == 0) {
+            throw new IllegalArgumentException("Latitude and Longitude must be non-zero");
         }
-
-        if (location.getLongitude() < -180 || location.getLongitude() > 180) {
-            throw new RuntimeException("Invalid longitude");
-        }
-
         return locationRepository.save(location);
+    }
+
+    @Override
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();
     }
 }
