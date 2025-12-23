@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +17,16 @@ public class RouteOptimizationResult {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "shipment_id")
+    @JoinColumn(name = "shipment_id", nullable = false)
     private Shipment shipment;
 
     private Double optimizedDistanceKm;
+
     private Double estimatedFuelUsageL;
+
     private LocalDateTime generatedAt;
 
-    // ✅ REQUIRED BY SERVICE
+    // REQUIRED constructor for service usage
     public RouteOptimizationResult(
             Shipment shipment,
             Double optimizedDistanceKm,
@@ -37,5 +37,10 @@ public class RouteOptimizationResult {
         this.optimizedDistanceKm = optimizedDistanceKm;
         this.estimatedFuelUsageL = estimatedFuelUsageL;
         this.generatedAt = generatedAt;
+    }
+
+    @PrePersist
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
     }
 }
