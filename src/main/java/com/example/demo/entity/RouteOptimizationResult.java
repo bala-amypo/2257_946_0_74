@@ -1,8 +1,15 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "route_optimization_results")
 public class RouteOptimizationResult {
@@ -11,8 +18,8 @@ public class RouteOptimizationResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "shipment_id")
+    @ManyToOne
+    @JoinColumn(name = "shipment_id", nullable = false)
     private Shipment shipment;
 
     private Double optimizedDistanceKm;
@@ -20,20 +27,4 @@ public class RouteOptimizationResult {
     private Double estimatedFuelUsageL;
 
     private LocalDateTime generatedAt;
-
-    // No-arg constructor
-    public RouteOptimizationResult() {}
-
-    // Parameterized constructor (JUST assigns)
-    public RouteOptimizationResult(Shipment shipment,
-                                   Double optimizedDistanceKm,
-                                   Double estimatedFuelUsageL,
-                                   LocalDateTime generatedAt) {
-        this.shipment = shipment;
-        this.optimizedDistanceKm = optimizedDistanceKm;
-        this.estimatedFuelUsageL = estimatedFuelUsageL;
-        this.generatedAt = generatedAt;
-    }
-
-    // getters & setters
 }
