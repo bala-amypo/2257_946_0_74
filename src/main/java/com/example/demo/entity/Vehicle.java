@@ -1,27 +1,37 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "vehicles")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(unique = true)
     private String vehicleNumber;
 
-    private double capacityKg;
+    private Double capacityKg;
 
-    private double fuelEfficiency;
+    private Double fuelEfficiency; // Km per liter
 
-    @ManyToOne
-    private User user;
+    // Parameterized constructor as per requirement
+    public Vehicle(User user, String vehicleNumber, Double capacityKg, Double fuelEfficiency) {
+        this.user = user;
+        this.vehicleNumber = vehicleNumber;
+        this.capacityKg = capacityKg;
+        this.fuelEfficiency = fuelEfficiency;
+    }
 }
