@@ -1,32 +1,30 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ApiResponse;
 import com.example.demo.entity.RouteOptimizationResult;
 import com.example.demo.service.RouteOptimizationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/optimize")
 public class RouteOptimizationController {
 
-    private final RouteOptimizationService routeOptimizationService;
+    private final RouteOptimizationService routeService;
 
-    public RouteOptimizationController(RouteOptimizationService routeOptimizationService) {
-        this.routeOptimizationService = routeOptimizationService;
+    public RouteOptimizationController(RouteOptimizationService routeService) {
+        this.routeService = routeService;
     }
 
-    // POST /optimize/{shipmentId}
     @PostMapping("/{shipmentId}")
-    public RouteOptimizationResult optimizeRoute(
-            @PathVariable Long shipmentId) {
-
-        return routeOptimizationService.optimizeRoute(shipmentId);
+    public ResponseEntity<ApiResponse> optimizeRoute(@PathVariable Long shipmentId) {
+        RouteOptimizationResult result = routeService.optimizeRoute(shipmentId);
+        return ResponseEntity.ok(new ApiResponse(true, "Route optimized successfully", result));
     }
 
-    // GET /optimize/result/{resultId}
     @GetMapping("/result/{resultId}")
-    public RouteOptimizationResult getResult(
-            @PathVariable Long resultId) {
-
-        return routeOptimizationService.getResult(resultId);
+    public ResponseEntity<ApiResponse> getResult(@PathVariable Long resultId) {
+        RouteOptimizationResult result = routeService.getResult(resultId);
+        return ResponseEntity.ok(new ApiResponse(true, "Result retrieved successfully", result));
     }
 }

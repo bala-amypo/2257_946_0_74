@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ApiResponse;
 import com.example.demo.entity.Shipment;
 import com.example.demo.service.ShipmentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,18 +16,15 @@ public class ShipmentController {
         this.shipmentService = shipmentService;
     }
 
-    // POST /shipments/{vehicleId}
     @PostMapping("/{vehicleId}")
-    public Shipment createShipment(
-            @PathVariable Long vehicleId,
-            @RequestBody Shipment shipment) {
-
-        return shipmentService.createShipment(vehicleId, shipment);
+    public ResponseEntity<ApiResponse> createShipment(@PathVariable Long vehicleId, @RequestBody Shipment shipment) {
+        Shipment savedShipment = shipmentService.createShipment(vehicleId, shipment);
+        return ResponseEntity.ok(new ApiResponse(true, "Shipment created successfully", savedShipment));
     }
 
-    // GET /shipments/{shipmentId}
     @GetMapping("/{shipmentId}")
-    public Shipment getShipment(@PathVariable Long shipmentId) {
-        return shipmentService.getShipment(shipmentId);
+    public ResponseEntity<ApiResponse> getShipment(@PathVariable Long shipmentId) {
+        Shipment shipment = shipmentService.getShipment(shipmentId);
+        return ResponseEntity.ok(new ApiResponse(true, "Shipment retrieved successfully", shipment));
     }
 }
