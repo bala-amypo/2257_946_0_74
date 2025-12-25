@@ -1,29 +1,37 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
-@Entity // <-- Add this
-@Table(name = "route_optimization_results") // optional, customize table name
+@Entity
+@Table(name = "route_optimization_results")
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RouteOptimizationResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Primary key
+    private Long id;
 
-    private String route;
+    @ManyToOne
+    @JoinColumn(name = "shipment_id")
+    private Shipment shipment;
 
-    private double distance;
+    private Double optimizedDistanceKm;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Shipment shipment; // Assuming Shipment is also an @Entity
+    private Double estimatedFuelUsageL;
 
-    private double fuelUsed;
+    private LocalDateTime generatedAt;
 
-    private LocalDateTime createdAt;
+    // Parameterized constructor as per requirement
+    public RouteOptimizationResult(Shipment shipment, Double optimizedDistanceKm, Double estimatedFuelUsageL, LocalDateTime generatedAt) {
+        this.shipment = shipment;
+        this.optimizedDistanceKm = optimizedDistanceKm;
+        this.estimatedFuelUsageL = estimatedFuelUsageL;
+        this.generatedAt = generatedAt;
+    }
 }

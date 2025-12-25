@@ -1,14 +1,15 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "locations")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Location {
 
     @Id
@@ -17,7 +18,14 @@ public class Location {
 
     private String name;
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
+
+    // Parameterized constructor as per requirement
+    public Location(String name, Double latitude, Double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

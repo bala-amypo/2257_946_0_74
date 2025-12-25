@@ -34,4 +34,4 @@ public class Vehicle {
         this.capacityKg = capacityKg;
         this.fuelEfficiency = fuelEfficiency;
     }
-}
+} 

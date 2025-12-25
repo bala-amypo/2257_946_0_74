@@ -1,16 +1,16 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "shipments")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Shipment {
 
     @Id
@@ -18,15 +18,27 @@ public class Shipment {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @ManyToOne
+    @JoinColumn(name = "pickup_location_id")
     private Location pickupLocation;
 
     @ManyToOne
+    @JoinColumn(name = "drop_location_id")
     private Location dropLocation;
 
-    private double weightKg;
+    private Double weightKg;
 
     private LocalDate scheduledDate;
+
+    // Parameterized constructor as per requirement
+    public Shipment(Vehicle vehicle, Location pickupLocation, Location dropLocation, Double weightKg, LocalDate scheduledDate) {
+        this.vehicle = vehicle;
+        this.pickupLocation = pickupLocation;
+        this.dropLocation = dropLocation;
+        this.weightKg = weightKg;
+        this.scheduledDate = scheduledDate;
+    }
 }
