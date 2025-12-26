@@ -18,7 +18,6 @@
 
     <properties>
         <java.version>17</java.version>
-        <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <mockito.version>5.6.0</mockito.version>
     </properties>
 
@@ -86,6 +85,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <!-- Exclude JUnit 5 to prevent it from interfering with TestNG -->
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -103,6 +113,7 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -115,34 +126,34 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- Maven Surefire Plugin (Fixed and Combined) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <!-- Ensure this file exists in your project root -->
+                        <!-- Path to your testng.xml file -->
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <properties>
+                        <property>
+                            <name>testkind</name>
+                            <value>testng</value>
+                        </property>
+                    </properties>
+                    <threadCount>1</threadCount>
                 </configuration>
+                <dependencies>
+                    <!-- Explicitly add the TestNG provider for Surefire -->
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>3.1.2</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-            <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.1.2</version>
-    <configuration>
-        <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
-        </suiteXmlFiles>
-        <!-- This prevents JUnit from overriding TestNG -->
-        <properties>
-            <property>
-                <name>testkind</name>
-                <value>testng</value>
-            </property>
-        </properties>
-    </configuration>
-</plugin>
         </plugins>
     </build>
 </project>
