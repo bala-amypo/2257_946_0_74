@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="TransportOptimizationSuite" verbose="1">
+    <test name="TransportTests">
+        <classes>
+            <!-- Make sure the package name and class name match your test file -->
+            <class name="com.example.demo.TransportRouteOptimizationTest"/>
+        </classes>
+    </test>
+</suite>
