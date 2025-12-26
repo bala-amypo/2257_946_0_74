@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.time.LocalDate;
 
 @Entity
@@ -11,8 +9,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Shipment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,15 +28,5 @@ public class Shipment {
     private Location dropLocation;
 
     private Double weightKg;
-
     private LocalDate scheduledDate;
-
-    // Parameterized constructor as per requirement
-    public Shipment(Vehicle vehicle, Location pickupLocation, Location dropLocation, Double weightKg, LocalDate scheduledDate) {
-        this.vehicle = vehicle;
-        this.pickupLocation = pickupLocation;
-        this.dropLocation = dropLocation;
-        this.weightKg = weightKg;
-        this.scheduledDate = scheduledDate;
-    }
 }
