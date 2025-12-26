@@ -5,4 +5,3 @@ public class TestResultListener implements ITestListener {
     public void onTestSuccess(ITestResult result) { System.out.println("PASSED: " + result.getName()); }
     public void onTestFailure(ITestResult result) { System.out.println("FAILED: " + result.getName()); }
 }
-EOF
