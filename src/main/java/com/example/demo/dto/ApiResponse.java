@@ -11,10 +11,9 @@ public class ApiResponse {
     private String message;
     private Object data;
 
-    // Add this constructor to fix the compilation error
+    // This constructor is required by your GlobalExceptionHandler
     public ApiResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
-        this.data = null;
     }
 }
