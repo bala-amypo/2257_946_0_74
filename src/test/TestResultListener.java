@@ -1,8 +1,3 @@
-# Create the directory
-mkdir -p src/test/java/com/example/demo/
-
-# Create the file
-cat <<EOF > src/test/java/com/example/demo/TestResultListener.java
 package com.example.demo;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
