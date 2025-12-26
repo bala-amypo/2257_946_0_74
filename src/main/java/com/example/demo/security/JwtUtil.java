@@ -16,8 +16,6 @@ import java.util.Map;
 public class JwtUtil {
     private final String secretKey;
     private final long expirationMillis;
-
-    // Constructor required for both Spring and the Test file (t51)
     public JwtUtil(@Value("${jwt.secret:testsecretkeytestsecretkeytestsecretkey}") String secretKey, 
                    @Value("${jwt.expiration:3600000}") long expirationMillis) {
         this.secretKey = secretKey;
@@ -27,7 +25,7 @@ public class JwtUtil {
     public String generateToken(Long userId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
-        claims.put("email", email); // CRITICAL: Test t44 requires this specific key
+        claims.put("email", email); 
         claims.put("role", role);
 
         return Jwts.builder()
