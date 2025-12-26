@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public class LocationServiceImpl implements LocationService {
-
     private final LocationRepository locationRepository;
 
     public LocationServiceImpl(LocationRepository locationRepository) {
@@ -17,9 +16,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location createLocation(Location location) {
-        // Validation Rule: If latitude is invalid (e.g., > 90), throw with "latitude"
-        if (location.getLatitude() == null || location.getLatitude() < -90 || location.getLatitude() > 90) {
-            throw new IllegalArgumentException("Invalid latitude coordinate");
+        if (location.getLatitude() < -90 || location.getLatitude() > 90) {
+            throw new IllegalArgumentException("Invalid latitude value");
         }
         return locationRepository.save(location);
     }
