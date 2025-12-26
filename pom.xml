@@ -154,8 +154,8 @@
                     </dependency>
                 </dependencies>
             </plugin> -->
-            <plugin>
-<groupId>org.springframework.boot</groupId>
+                    <plugin>
+                    <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-maven-plugin</artifactId>
 </plugin>
 <plugin>
